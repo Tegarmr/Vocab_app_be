@@ -1,0 +1,13 @@
+services:
+  vocab-backend:
+    build: ./server
+    container_name: vocab-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    volumes:
+      - ./server/uploads:/app/uploads
