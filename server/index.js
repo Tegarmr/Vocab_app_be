@@ -259,9 +259,11 @@ app.post('/upload-csv', apiKeyAuth, uploadLimiter, upload.single('file'), (req, 
         });
 });
 
-// Endpoint: Get Random Word (No auth needed for reading)
+// Endpoint: Get Random Word (VERSI MOCK UNTUK LOAD TEST)
 app.get('/word', async (req, res) => {
     try {
+        // Logika asli dikomentari agar tidak memanggil Supabase
+        /*
         const { count } = await supabase.from('right_guess').select('*', { count: 'exact', head: true });
         if (count === null || count === 0) return res.status(404).json({ error: 'No words found' });
 
@@ -270,24 +272,28 @@ app.get('/word', async (req, res) => {
         const { data, error } = await supabase
             .from('right_guess')
             .select(`
-        id,
-        id_english,
-        id_indonesia,
-        success,
-        english (en_word),
-        indonesia (id_word)
-      `)
+                id, id_english, id_indonesia, success,
+                english (en_word), indonesia (id_word)
+            `)
             .range(randomIndex, randomIndex)
             .single();
 
         if (error) throw error;
-        res.json(data);
+        */
+
+        // Mengirimkan data statis (Mock Data)
+        res.json({
+            id: 1,
+            id_english: 101,
+            id_indonesia: 202,
+            success: 'N',
+            english: { en_word: "vps_strength_test" },
+            indonesia: { id_word: "uji_kekuatan_vps" }
+        });
+
     } catch (error) {
         console.error('Fetch word error:', error);
-        const errorMessage = process.env.NODE_ENV === 'production'
-            ? 'Error fetching word'
-            : error.message;
-        res.status(500).json({ error: errorMessage });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
