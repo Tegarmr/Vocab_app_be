@@ -94,7 +94,7 @@ const editLimiter = rateLimit({
 });
 
 // Apply general rate limiter to all routes
-app.use(generalLimiter);
+//app.use(generalLimiter);
 
 // Helper: Chunk array into smaller batches
 function chunkArray(array, size) {
@@ -292,7 +292,7 @@ app.get('/word', async (req, res) => {
 });
 
 // Endpoint: Update Word (Protected with Auth + Rate Limit)
-app.put('/word/:id', apiKeyAuth, editLimiter, async (req, res) => {
+app.put('/word/:id', apiKeyAuth, /*editLimiter,*/ async (req, res) => {
     const { id } = req.params;
     const { en_word, id_word } = req.body;
 
